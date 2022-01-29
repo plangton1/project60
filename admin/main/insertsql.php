@@ -6,7 +6,7 @@ if ($mode == "insert_data") {
     // main_tb
     $main_meet = $_REQUEST['main_meet'];
     $main_source = $_REQUEST['main_source'];
-    $main_pick = $_REQUEST['main_pick'];
+    $main_pick = empty($_REQUEST["main_pick"]) ? [] : $_REQUEST['main_pick'];
     $main_day = $_REQUEST['main_day'];
 
     // multiple form

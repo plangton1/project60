@@ -15,7 +15,7 @@ if (isset($_GET['main_id']) && !empty($_GET['main_id'])) {
     $result = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
 }
 
-if (!isset($_POST) && !empty($_POST)) {
+if (isset($_POST) && !empty($_POST)) {
     $main_meet = $_POST['main_meet'];
     $main_num = $_POST['main_num'];
     $main_note = $_POST['main_note'];
@@ -179,47 +179,3 @@ if (!isset($_POST) && !empty($_POST)) {
     //  ไฟล์
 }
 ?>
-<form action="" method="POST" enctype="multipart/form-data">
-    <div class="container">
-        <div class="col-md-6">
-            <!-- แยกตามที่มา -->
-            <?php if ($result['main_source'] == 1) { ?>
-                <lable>จากการประชุมวันที่ <?php echo DateThai($result['main_day']); ?></lable>
-            <?php } ?>
-            <?php if ($result['main_source'] == 2) { ?>
-                <lable>จดหมายสอบถามสมอ</lable>
-                <p><?php echo $result['main_pick']; ?>วันที่<?php echo $result['main_day']; ?></p>
-            <?php } ?>
-            <br>
-            <label>สถานะเดิม <?php echo $result['main_status'] ?></label><br>
-            <label>วันที่เพิ่มสถานะ <?php echo ($result['main_update']) ?></label>
-            <br>
-            <label>สถานะใหม่</label><br>
-            <input type="date" class="form-control" name="main_update1">
-            <label>วันที่เพิ่มสถานะใหม่</label>
-            <select class="form-control" name="main_status1" >
-                <option value="" selected disabled>สถานที่ต้องการเปลี่ยน</option>
-                <?php $sql = "SELECT * FROM status_tb"; $query = sqlsrv_query($conn, $sql);
-                while ($resultt = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) : ?>
-                <option value="<?= $resultt['status_id'] ?>" <?= $result['main_status1'] == $result['main_status1'] ? 'selected' : '' ?>>
-                <?= $resultt['status_name'] ?></option>
-                <?php endwhile; ?>
-            </select>
-            <br>
-            <label>หมายเหตุ</label>
-            <input type="text" name="main_note" value="<?= $result['main_note']; ?>" class="form-control">
-            <label>วาระจากการประชุม</label>
-            <input type="text" name="main_meet" value="<?= $result['main_meet']; ?>" class="form-control">
-            <label>ชื่อมาตรฐาน</label>
-            <input type="text" name="main_name" value="<?= $result['main_name']; ?>" class="form-control">
-            <label>เลขที่ มอก.</label>
-            <input type="text" name="main_num" value="<?= $result['main_num']; ?>" class="form-control">
-            <!-- เพิ่มหลายหน่วยงาน -->
-            <?php require 'multiform/index.php'; ?>
-            <!-- เพิ่มหลายหน่วยงาน -->
-        </div>
-
-        <button class="btn btn-primary" type="submit">บันทึกการแก้ไข</button>
-    </div>
-    </div>
-</form>

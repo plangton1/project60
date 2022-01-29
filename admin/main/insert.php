@@ -67,7 +67,7 @@ $date = date("Y-m-d"); ?>
             </section>
             <!-- หน่วยงานคู่แข่ง -->
 
-            
+
             <!-- หน่วยงานที่ขอ -->
             <section>
                 <label>หน่วยงานที่ขอ</label>
@@ -169,26 +169,26 @@ $date = date("Y-m-d"); ?>
 
             <!-- ไฟล์ -->
             <section>
-            <label>ไฟล์ที่ต้องการแนบ</label>
-            <a href="javascript:void(0)" onclick="add_element('m5','sub_m5');" class="btn btn-success">เพิ่ม</a>
-            <div class="mt-3" id="m5">
-                <input type="file" class="form-control" name="fileupload[]" id="fileupload" style="height: unset !important;">
-                <div style="display:none;">
-                    <div class="row" id="sub_m5">
-                        <div class="form-group mb-2 input-group mt-3">
-                            <input type="file" class="form-control" name="fileupload[]" id="fileupload" style="height: unset !important;">
-                            <button type="button" onclick="$(this).parent().remove();" class="remove-btn btn btn-danger ">ลบ</button>
+                <label>ไฟล์ที่ต้องการแนบ</label>
+                <a href="javascript:void(0)" onclick="add_element('m5','sub_m5');" class="btn btn-success">เพิ่ม</a>
+                <div class="mt-3" id="m5">
+                    <input type="file" class="form-control" name="fileupload[]" id="fileupload" style="height: unset !important;">
+                    <div style="display:none;">
+                        <div class="row" id="sub_m5">
+                            <div class="form-group mb-2 input-group mt-3">
+                                <input type="file" class="form-control" name="fileupload[]" id="fileupload" style="height: unset !important;">
+                                <button type="button" onclick="$(this).parent().remove();" class="remove-btn btn btn-danger ">ลบ</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </section>
             <!-- ไฟล์ -->
 
 
             <button class="btn btn-primary" type="submit">ตกลง</button>
 
-            
+
         </div>
     </div>
 </form>
