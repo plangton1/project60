@@ -1,6 +1,6 @@
 <?php
 $serverName = "LAPTOP-O7F4B0NM"; //LAPTOP-O7F4B0NM , DESKTOP-R0ETL6G , PLUEMMER\SQLEXPRESS
-$serverName2 = "PLUEMMER\SQLEXPRESS";
+$serverName2 = "DESKTOP-R0ETL6G";
 $user = "pluem";
 $pass = "1234";
 
