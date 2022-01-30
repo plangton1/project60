@@ -1,8 +1,8 @@
 <?php
-if (isset($_GET['id_statuss']) && !empty($_GET['id_statuss'])) {
-    $id_statuss = $_GET['id_statuss'];
-    $sql = "DELETE FROM select_status WHERE id_statuss = ? ";
-    $params = array($id_statuss);
+if (isset($_GET['status_id']) && !empty($_GET['status_id'])) {
+    $status_id = $_GET['status_id'];
+    $sql = "DELETE FROM status_tb WHERE status_id = ? ";
+    $params = array($status_id);
     if (sqlsrv_query($conn, $sql, $params)) {
         // echo "ลบข้อมูลสำเร็จ";
         $alert = '<script type="text/javascript">';

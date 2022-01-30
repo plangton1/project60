@@ -1,15 +1,15 @@
 <?php
-if (isset($_GET['department_id']) && !empty($_GET['department_id'])) {
-    $department_id = $_GET['department_id'];
-    $sql = "SELECT * FROM department_tb WHERE department_id = ?";
-    $params = array($department_id);
+if (isset($_GET['dep_id']) && !empty($_GET['dep_id'])) {
+    $dep_id = $_GET['dep_id'];
+    $sql = "SELECT * FROM dep_tb WHERE dep_id = ?";
+    $params = array($dep_id);
     $query = sqlsrv_query($conn, $sql, $params);
     $result = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
 }
 if (isset($_POST) && !empty($_POST)) {
-    $department_name = $_POST['department_name'];
-    $sql = "UPDATE department_tb SET department_name= ?  WHERE department_id = ? ";
-    $params = array($department_name, $department_id);
+    $dep_name = $_POST['dep_name'];
+    $sql = "UPDATE dep_tb SET dep_name= ?  WHERE dep_id = ? ";
+    $params = array($dep_name, $dep_id);
 
     if (sqlsrv_query($conn, $sql, $params)) {
         $alert = '<script type="text/javascript">';
@@ -39,7 +39,7 @@ if (isset($_POST) && !empty($_POST)) {
             <div id="home" class="container-fluid tab-pane active m-2">
                 <div class="mb-3">
                     <label class="form-label">ชื่อกลุ่ม</label>
-                    <input type="text" class="form-control" value="<?= $result['department_name'] ?>" name="department_name" placeholder="ชื่อกลุ่ม :" required autocomplete="off">
+                    <input type="text" class="form-control" value="<?= $result['dep_name'] ?>" name="dep_name" placeholder="ชื่อกลุ่ม :" required autocomplete="off">
                 </div>
                 <button type="submit" class="btn btn-primary">บันทึก</button>
     </form>

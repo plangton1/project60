@@ -1,8 +1,8 @@
 <?php
-if (isset($_GET['group_id']) && !empty($_GET['group_id'])) {
-    $group_id = $_GET['group_id'];
-    $sql = "DELETE FROM group_tb WHERE group_id = ? ";
-    $params = array($group_id);
+if (isset($_GET['gg_id']) && !empty($_GET['gg_id'])) {
+    $gg_id = $_GET['gg_id'];
+    $sql = "DELETE FROM gg_tb WHERE gg_id = ? ";
+    $params = array($gg_id);
     if (sqlsrv_query($conn, $sql, $params)) {
         // echo "ลบข้อมูลสำเร็จ";
         $alert = '<script type="text/javascript">';

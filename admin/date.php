@@ -25,5 +25,3 @@
 		return "$strDay $strMonthThai $strYear";
 	}
 ?>
-<!--  เรียกใช้  picker_date.js สำหรับสร้างตัวเลือก ปฎิทิน -->
-<script src="https://รับเขียนโปรแกรม.net/picker_date/picker_date.js"></script>

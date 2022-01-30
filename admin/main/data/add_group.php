@@ -1,9 +1,9 @@
 <?php
 if (isset($_POST) && !empty($_POST)) {
-    $group_id = $_POST['group_id'];
-    $group_name = $_POST['group_name'];
+    $gg_id = $_POST['gg_id'];
+    $gg_name = $_POST['gg_name'];
 }
-$sql = "SELECT * FROM group_tb ";
+$sql = "SELECT * FROM gg_tb ";
 $query = sqlsrv_query($conn, $sql);
 ?>
 <form method="post" action="">
@@ -30,13 +30,13 @@ $query = sqlsrv_query($conn, $sql);
                     <tbody>
                         <?php while ($data = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) { ?>
                             <tr class="text-center">
-                                <td class="align-middle"><?= $data['group_id'] ?></td>
-                                <td class="align-middle"><?= $data['group_name'] ?></td>
+                                <td class="align-middle"><?= $data['gg_id'] ?></td>
+                                <td class="align-middle"><?= $data['gg_name'] ?></td>
                                 <td class="align-middle">
                                     <div class="mb-4">
-                                        <a href="?page=<?= $_GET['page'] ?>&function=update&group_id=<?= $data['group_id'] ?>" class="btn btn-sm btn-warning">แก้ไข</a>
+                                        <a href="?page=<?= $_GET['page'] ?>&function=update&gg_id=<?= $data['gg_id'] ?>" class="btn btn-sm btn-warning">แก้ไข</a>
 
-                                        <a href="?page=<?= $_GET['page'] ?>&function=delete&group_id=<?= $data['group_id'] ?>" onclick="return confirm('คุณต้องการลบประเภทนี้ : <?= $data['group_name'] ?> หรือไม่ ??')" class="btn btn-sm btn-danger">ลบ</a>
+                                        <a href="?page=<?= $_GET['page'] ?>&function=delete&gg_id=<?= $data['gg_id'] ?>" onclick="return confirm('คุณต้องการลบประเภทนี้ : <?= $data['gg_name'] ?> หรือไม่ ??')" class="btn btn-sm btn-danger">ลบ</a>
                                 </td>
 
             </div>

@@ -1,8 +1,8 @@
 <?php
-if (isset($_GET['department_id']) && !empty($_GET['department_id'])) {
-    $department_id = $_GET['department_id'];
-    $sql = "DELETE FROM department_tb WHERE department_id = ? ";
-    $params = array($department_id);
+if (isset($_GET['dep_id']) && !empty($_GET['dep_id'])) {
+    $dep_id = $_GET['dep_id'];
+    $sql = "DELETE FROM dep_tb WHERE dep_id = ? ";
+    $params = array($dep_id);
     if (sqlsrv_query($conn, $sql, $params)) {
         // echo "ลบข้อมูลสำเร็จ";
         $alert = '<script type="text/javascript">';

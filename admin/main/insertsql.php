@@ -1,22 +1,41 @@
 <?php
-require '../connection.php';
+function datetodb($date)
+//    23/04/2564
+{
+    $day = substr($date, 0, 2); // substrตัดข้อความที่เป็นสติง
+    $month = substr($date, 3, 2); //ตัดตำแหน่ง
+    $year = substr($date, 6) - 543;
+    $dateme = $year . '-' . $month . '-' . $day;
+    return $dateme; //return ส่งค่ากลับไป
+}
+?>
+<?php
+require './connection.php';
 $date = date("Y-m-d");
-$mode = $_REQUEST["mode"];
+$mode = @$_REQUEST["mode"];
 if ($mode == "insert_data") {
     // main_tb
     $main_meet = $_REQUEST['main_meet'];
     $main_source = $_REQUEST['main_source'];
-    $main_pick = empty($_REQUEST["main_pick"]) ? [] : $_REQUEST['main_pick'];
-    $main_day = $_REQUEST['main_day'];
+    $main_day = datetodb($_REQUEST['main_day']);
+    if ($_REQUEST["main_pick"] != "") {
+        $main_pick = ($_REQUEST["main_pick"]);
+   } else {
+       $main_pick = "";
+   }
 
     // multiple form
     $agency_id = empty($_REQUEST["agency_id"]) ? [] : $_REQUEST['agency_id'];
     $dep_id = empty($_REQUEST["dep_id"]) ? [] : $_REQUEST['dep_id'];
     $type_id = empty($_REQUEST["type_id"]) ? [] : $_REQUEST['type_id'];
     $gg_id = empty($_REQUEST["gg_id"]) ? [] : $_REQUEST['gg_id'];
+    
     // sub_main
     $main_name = $_REQUEST['main_name'];
     $main_num = $_REQUEST['main_num'];
+
+    // dimenstatus
+        $status_id = ($_REQUEST["status_id"]);
 
     $sql = "INSERT INTO main_tb (main_meet , main_source , main_create , main_pick , main_day) VALUES ( '$main_meet' ,'$main_source' , '$date' , '$main_pick' ,'$main_day') ";
     $query = sqlsrv_query($conn, $sql);
@@ -26,6 +45,9 @@ if ($mode == "insert_data") {
     $resultMaxid = sqlsrv_fetch_array($querymax, SQLSRV_FETCH_ASSOC);
     $main_id =  $resultMaxid['Maxid'];
 
+    $sql0 = "INSERT INTO dimen_status (status_id , main_id , status_update) VALUES ('7' , '$main_id' , '$date')" ; 
+    $query0 = sqlsrv_query($conn , $sql0);
+    
     $countagency = count($agency_id);
     for($i = 0 ; $i < $countagency ; $i++){
         $agencyid = $agency_id[$i];

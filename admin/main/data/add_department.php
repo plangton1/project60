@@ -1,9 +1,9 @@
 <?php
 if (isset($_POST) && !empty($_POST)) {
-    $department_id = $_POST['department_id'];
-    $department_name = $_POST['department_name'];
+    $dep_id = $_POST['dep_id'];
+    $dep_name = $_POST['dep_name'];
 }
-$sql = "SELECT * FROM department_tb ";
+$sql = "SELECT * FROM dep_tb ";
 $query = sqlsrv_query($conn, $sql);
 ?>
 <form method="post" action="">
@@ -30,13 +30,13 @@ $query = sqlsrv_query($conn, $sql);
                     <tbody>
                         <?php while ($data = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) { ?>
                             <tr class="text-center">
-                                <td class="align-middle"><?= $data['department_id'] ?></td>
-                                <td class="align-middle"><?= $data['department_name'] ?></td>
+                                <td class="align-middle"><?= $data['dep_id'] ?></td>
+                                <td class="align-middle"><?= $data['dep_name'] ?></td>
                                 <td class="align-middle">
                                     <div class="mb-4">
-                                        <a href="?page=<?= $_GET['page'] ?>&function=update&department_id=<?= $data['department_id'] ?>" class="btn btn-sm btn-warning">แก้ไข</a>
+                                        <a href="?page=<?= $_GET['page'] ?>&function=update&dep_id=<?= $data['dep_id'] ?>" class="btn btn-sm btn-warning">แก้ไข</a>
 
-                                        <a href="?page=<?= $_GET['page'] ?>&function=delete&department_id=<?= $data['department_id'] ?>" onclick="return confirm('คุณต้องการลบประเภทนี้ : <?= $data['department_name'] ?> หรือไม่ ??')" class="btn btn-sm btn-danger">ลบ</a>
+                                        <a href="?page=<?= $_GET['page'] ?>&function=delete&dep_id=<?= $data['dep_id'] ?>" onclick="return confirm('คุณต้องการลบประเภทนี้ : <?= $data['dep_name'] ?> หรือไม่ ??')" class="btn btn-sm btn-danger">ลบ</a>
                                 </td>
 
             </div>

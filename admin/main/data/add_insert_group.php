@@ -1,11 +1,11 @@
 <?php
-$group_id = (isset($_GET['group_id'])) ? $_GET['group_id'] : '';
-$group_name = (isset($_GET['group_name'])) ? $_GET['group_name'] : '';
+$gg_id = (isset($_GET['gg_id'])) ? $_GET['gg_id'] : '';
+$gg_name = (isset($_GET['gg_name'])) ? $_GET['gg_name'] : '';
 if (isset($_POST) && !empty($_POST)) {
-    $group_id = $_POST['group_id'];
-    $group_name = $_POST['group_name'];
-    $sql = "INSERT INTO group_tb VALUES (?,?) ";
-    $params = array($group_id, $group_name);
+    $gg_id = $_POST['gg_id'];
+    $gg_name = $_POST['gg_name'];
+    $sql = "INSERT INTO gg_tb VALUES (?,?) ";
+    $params = array($gg_id, $gg_name);
     if (sqlsrv_query($conn, $sql, $params)) {
         $alert = '<script type="text/javascript">';
         $alert .= 'alert("เพิ่มข้อมูลกลุ่มสำเร็จ !!");';
@@ -38,9 +38,9 @@ if (isset($_POST) && !empty($_POST)) {
                 <div class="">
                     <div>
                         <label> หมายเลขกลุ่ม </label>
-                        <input type="text" name="group_id" class="form-control" autocomplete="off">
+                        <input type="text" name="gg_id" class="form-control" autocomplete="off">
                         <label> ชื่อกลุ่มผลิตภัณฑ์ </label>
-                        <input type="text" name="group_name" class="form-control" autocomplete="off">
+                        <input type="text" name="gg_name" class="form-control" autocomplete="off">
                     </div>
                 </div>
                 <hr>

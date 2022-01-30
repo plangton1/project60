@@ -1,11 +1,12 @@
-<?php require './date.php';
+<?php require './date.php'; require 'insertsql.php';
 $date = date("Y-m-d"); ?>
-<form action="./main/insertsql.php" method="POST" enctype="multipart/form-data">
+<form action="" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="mode" value="insert_data">
     <div class="container">
         <div class="col-md-8">
-            <p>วันที่เพิ่มเอกสาร<?php echo datethai($date); ?></p>
-
+            <input type="text"  value="สถานะเริ่มต้น : รอดำเนินการ" class="form-control text-center" disabled>
+            
+            <p>วันที่เพิ่มเอกสาร<?php echo datethai($date); ?></p>  
 
             <div class="input-group">
                 <input type="radio" name="main_source" onclick="document.getElementById('text').disabled=true" value="1">

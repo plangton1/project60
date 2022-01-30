@@ -8,28 +8,42 @@ function datetodb($date)
     $dateme = $year . '-' . $month . '-' . $day;
     return $dateme;
 }
+function datetodb3($date)
+{
+    $day = substr($date, 0, 2);
+    $month = substr($date, 3, 2);
+    $year = substr($date, 6) - 543;
+    $dateme = $year . '-' . $month . '-' . $day;
+    return $dateme;
+}
 if (isset($_GET['main_id']) && !empty($_GET['main_id'])) {
     $main_id = $_GET['main_id'];
-    $sql = "SELECT * FROM main_tb a JOIN sub_main b ON a.main_id = b.main_id  WHERE a.main_id =  " . $_REQUEST["main_id"];
+    $sql = "SELECT * ,c.status_id,d.status_id,d.status_name AS name_status  FROM main_tb a JOIN sub_main b ON a.main_id = b.main_id JOIN dimen_status c ON b.main_id = c.main_id JOIN status_tb d ON c.status_id = d.status_id WHERE a.main_id =  " . $_REQUEST["main_id"];
     $query = sqlsrv_query($conn, $sql);
     $result = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
 }
 
-if (!isset($_POST) && !empty($_POST)) {
+if (isset($_POST) && !empty($_POST)) {
     $main_meet = $_POST['main_meet'];
     $main_num = $_POST['main_num'];
     $main_note = $_POST['main_note'];
     $main_name = $_POST['main_name'];
-    $main_update1 = datetodb($_POST['main_update1']);
-    $main_status1 = $_POST['main_status1'];
+    $old_status_id = $_POST['old_status_id'];
+    $status_id = $_POST['status_id'];
+    $status_update = datetodb3($_POST['status_update']);
+    $date = date('Y-m-d');
 
     $sql = "UPDATE main_tb   SET main_meet = '$main_meet' WHERE main_id = '$main_id'";
-    $query = sqlsrv_query($conn, $sql);
-    if ($query != '') {
-        $sql1 = "UPDATE sub_main   SET main_status1 = '$main_status1' , main_num = '$main_num' , main_note = '$main_note' , main_name = '$main_name' , main_update1 = '$main_update1' WHERE main_id = '$main_id'";
+    if ($query = sqlsrv_query($conn, $sql)) {
+        $sql1 = "UPDATE sub_main   SET main_num = '$main_num' , main_note = '$main_note' , main_name = '$main_name' WHERE main_id =" . $result['main_id'] . "ORDER BY id_dimension_status desc";
         $query1 = sqlsrv_query($conn, $sql1);
-    } else {
-        echo 'ok';
+        if ($old_status_id != $status_id) {
+            $old_status_id = $_REQUEST['old_status_id'];
+            $status_id = $_REQUEST['status_id'];
+            $status_update = $_REQUEST['status_update'];
+            $sql_status = "INSERT INTO dimen_status ( status_id , status_update , main_id)  VALUES ('$status_id', ' $status_update', '$main_id')";
+            $stmt_status = sqlsrv_query($conn, $sql_status);
+        }
     }
     // หน่วยงานที่ขอ
     $count_agency = count($_REQUEST['id_dimension_agency']);
@@ -177,8 +191,22 @@ if (!isset($_POST) && !empty($_POST)) {
         }
     }
     //  ไฟล์
+    if (sqlsrv_query($conn, $sql_insert_file)) {
+        $alert = '<script type="text/javascript">';
+        $alert .= 'alert("แก้ไขข้อมูลสำเร็จ !!");';
+        $alert .= 'window.location.href = "?page=status";';
+        $alert .= '</script>';
+        echo $alert;
+        exit();
+    } else {
+        echo "Error: " . $sql_insert_file . "<br>" . sqlsrv_errors($conn);
+    }
+
+    sqlsrv_close($conn);
 }
 ?>
+
+
 <form action="" method="POST" enctype="multipart/form-data">
     <div class="container">
         <div class="col-md-6">
@@ -191,21 +219,40 @@ if (!isset($_POST) && !empty($_POST)) {
                 <p><?php echo $result['main_pick']; ?>วันที่<?php echo $result['main_day']; ?></p>
             <?php } ?>
             <br>
-            <label>สถานะเดิม <?php echo $result['main_status'] ?></label><br>
-            <label>วันที่เพิ่มสถานะ <?php echo ($result['main_update']) ?></label>
+
+            <?php $sql1 = "SELECT * ,a.status_id,b.status_id,b.status_name AS name_status FROM dimen_status a 
+          JOIN status_tb b ON a.status_id = b.status_id WHERE a.main_id =" . $result['main_id'] . " ORDER BY a.id_dimension_status DESC";
+            $query0 = sqlsrv_query($conn, $sql1);
+            $result0 = sqlsrv_fetch_array($query0, SQLSRV_FETCH_ASSOC) ?>
+            <lable>สถานะเดิมล่าสุด</lable>
+            <p><?php echo $result0['name_status'] ?></p>
+            <lable>วันที่เพิ่มสถานะเดิม</lable>
+            <p><?php echo datethai($result0['status_update']) ?></p>
+
+
+            <div class="form-group mb-2">
+                <label for="">สถานะ</label>
+                <select class="form-control" name="status_id" value="<?php echo $result['status_id'] ?>" style="height: unset !important;" required>
+                    <?php $sqll = "SELECT * FROM status_tb";
+                    $queryy = sqlsrv_query($conn, $sqll);
+                    while ($result16 = sqlsrv_fetch_array($queryy, SQLSRV_FETCH_ASSOC)) { ?>
+                        <?php if ($result['status_id'] == $result16['status_id']) {
+                            $st_name = "selected";
+                        } else {
+                            $st_name = "";
+                        } ?>
+                        <option value="<?php echo $result16['status_id'];  ?>" <?php echo $st_name;  ?>>
+                            <?php echo $result16['status_name'];  ?></option>
+                    <?php } ?>
+                </select>
+                <input id="" type="hidden" name="old_status_id" class=" form-control" value="<?php echo $result['status_id'] ?>">
+            </div>
+
+            <lable>วันที่แต่งตั้งสถานะใหม่</lable>
+            <input type="text" name="status_update" id="date3" class="form-control">
             <br>
-            <label>สถานะใหม่</label><br>
-            <input type="date" class="form-control" name="main_update1">
-            <label>วันที่เพิ่มสถานะใหม่</label>
-            <select class="form-control" name="main_status1" >
-                <option value="" selected disabled>สถานที่ต้องการเปลี่ยน</option>
-                <?php $sql = "SELECT * FROM status_tb"; $query = sqlsrv_query($conn, $sql);
-                while ($resultt = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC)) : ?>
-                <option value="<?= $resultt['status_id'] ?>" <?= $result['main_status1'] == $result['main_status1'] ? 'selected' : '' ?>>
-                <?= $resultt['status_name'] ?></option>
-                <?php endwhile; ?>
-            </select>
-            <br>
+
+
             <label>หมายเหตุ</label>
             <input type="text" name="main_note" value="<?= $result['main_note']; ?>" class="form-control">
             <label>วาระจากการประชุม</label>
@@ -223,3 +270,15 @@ if (!isset($_POST) && !empty($_POST)) {
     </div>
     </div>
 </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://รับเขียนโปรแกรม.net/picker_date/picker_date.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
+<script>
+    picker_date(document.getElementById("date1"), {
+        year_range: "-12:+10"
+    });
+    picker_date(document.getElementById("date3"), {
+        year_range: "-12:+10"
+    });
+</script>
+<!-- date -->

@@ -6,5 +6,8 @@
     picker_date(document.getElementById("date1"), {
         year_range: "-12:+10"
     });
+    picker_date(document.getElementById("date3"), {
+        year_range: "-12:+10"
+    });
 </script>
 <!-- date -->

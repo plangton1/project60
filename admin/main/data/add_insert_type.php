@@ -1,11 +1,11 @@
 <?php
-$id_statuss = (isset($_GET['id_statuss'])) ? $_GET['id_statuss'] : '';
-$statuss_name = (isset($_GET['statuss_name'])) ? $_GET['statuss_name'] : '';
+$status_id = (isset($_GET['status_id'])) ? $_GET['status_id'] : '';
+$status_name = (isset($_GET['status_name'])) ? $_GET['status_name'] : '';
 if (isset($_POST) && !empty($_POST)) {
-    $id_statuss = $_POST['id_statuss'];
-    $statuss_name = $_POST['statuss_name'];
-    $sql = "INSERT INTO select_status VALUES (?,?) ";
-    $params = array($id_statuss , $statuss_name);
+    $status_id = $_POST['status_id'];
+    $status_name = $_POST['status_name'];
+    $sql = "INSERT INTO status_tb VALUES (?,?) ";
+    $params = array($status_id , $status_name);
     $sss = sqlsrv_query($conn, $sql, $params);
     if ($sss = true) {
         $alert = '<script type="text/javascript">';
@@ -38,9 +38,9 @@ if (isset($_POST) && !empty($_POST)) {
             <div class="">
                 <div>
                     <label>หมายเลขสถานะ</label>
-                    <input  type="text" name="id_statuss" class="form-control" autocomplete="off">
+                    <input  type="text" name="status_id" class="form-control" autocomplete="off">
                     <label >ชื่อสถานะ</label>
-                    <input type="text" name="statuss_name" class="form-control" autocomplete="off">
+                    <input type="text" name="status_name" class="form-control" autocomplete="off">
                 </div>
             </div>
             <hr>

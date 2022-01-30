@@ -4,17 +4,16 @@ $agency_name = (isset($_GET['agency_name'])) ? $_GET['agency_name'] : '';
 if (isset($_POST) && !empty($_POST)) {
     $agency_id = $_POST['agency_id'];
     $agency_name = $_POST['agency_name'];
-    $sql = "INSERT INTO agency_tb VALUES (?,?) ";
-    $params = array($agency_id, $agency_name);
-    if (sqlsrv_query($conn, $sql, $params)) {
+    $sql = "INSERT INTO agency_tb VALUES ('$agency_id','$agency_name') ";
+    if (sqlsrv_query($conn, $sql)) {
         $alert = '<script type="text/javascript">';
         $alert .= 'alert("เพิ่มข้อมูลหน่วยงานสำเร็จ !!");';
         $alert .= 'window.location.href = "?page=add_agency";';
         $alert .= '</script>';
         echo $alert;
-        exit();;
+        exit();
     } else {
-        echo "Error: " . $sql0 . "<br>" . sqlsrv_errors($conn);
+        echo "Error: " . $sql . "<br>" . sqlsrv_errors($conn);
     }
     sqlsrv_close($conn);
 }
@@ -25,20 +24,21 @@ if (isset($_POST) && !empty($_POST)) {
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-heading">
-                    <h2 class="font-mirt">เพิ่มข้อมูลหน่วยงานคู่แข่ง</h2>
+                    <h2 class="font-mirt">เพิ่มข้อมูลกลุ่มผลิตภัณฑ์</h2>
                 </div>
             </div>
+        <div class="container card-regis font">
+
 
         <div class="container card-regis font">
-            <form method="post" action="">
-                
+            <form method="post" action="" >
                 <hr>
                 <br>
                 <div class="">
                     <div>
-                        <label> หมายเลขหน่วยงาน </label>
+                        <label> หมายเลขกลุ่ม </label>
                         <input type="text" name="agency_id" class="form-control" autocomplete="off">
-                        <label> ชื่อหน่วยงานคู่แข่ง </label>
+                        <label> ชื่อกลุ่มผลิตภัณฑ์ </label>
                         <input type="text" name="agency_name" class="form-control" autocomplete="off">
                     </div>
                 </div>
@@ -50,7 +50,8 @@ if (isset($_POST) && !empty($_POST)) {
                         <button type="submit" class="btn btn-info bt">เพิ่มข้อมูล</button>
                     </div>
                 </center>
-
+            </form>
         </div>
+
     </section>
 </form>

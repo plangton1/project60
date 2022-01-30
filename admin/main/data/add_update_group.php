@@ -1,15 +1,15 @@
 <?php
-if (isset($_GET['group_id']) && !empty($_GET['group_id'])) {
-    $group_id = $_GET['group_id'];
-    $sql = "SELECT * FROM group_tb WHERE group_id = ?";
-    $params = array($group_id);
+if (isset($_GET['gg_id']) && !empty($_GET['gg_id'])) {
+    $gg_id = $_GET['gg_id'];
+    $sql = "SELECT * FROM gg_tb WHERE gg_id = ?";
+    $params = array($gg_id);
     $query = sqlsrv_query($conn, $sql, $params);
     $result = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
 }
 if (isset($_POST) && !empty($_POST)) {
-    $group_name = $_POST['group_name'];
-    $sql = "UPDATE group_tb SET group_name= ?  WHERE group_id = ? ";
-    $params = array($group_name, $group_id);
+    $gg_name = $_POST['gg_name'];
+    $sql = "UPDATE gg_tb SET gg_name= ?  WHERE gg_id = ? ";
+    $params = array($gg_name, $gg_id);
 
     if (sqlsrv_query($conn, $sql, $params)) {
         $alert = '<script type="text/javascript">';
@@ -39,7 +39,7 @@ if (isset($_POST) && !empty($_POST)) {
             <div id="home" class="container-fluid tab-pane active m-2">
                 <div class="mb-3">
                     <label class="form-label">ชื่อกลุ่ม</label>
-                    <input type="text" class="form-control" value="<?= $result['group_name'] ?>" name="group_name" placeholder="ชื่อกลุ่ม :" required autocomplete="off">
+                    <input type="text" class="form-control" value="<?= $result['gg_name'] ?>" name="gg_name" placeholder="ชื่อกลุ่ม :" required autocomplete="off">
                 </div>
                 <button type="submit" class="btn btn-primary">บันทึก</button>
     </form>

@@ -6,7 +6,8 @@ if (isset($_GET['main_id']) && !empty($_GET['main_id'])) {
     $query = sqlsrv_query($conn, $sql);
     $result = sqlsrv_fetch_array($query, SQLSRV_FETCH_ASSOC);
 
-    $sql1 = "SELECT * , a.main_status,b.status_id,b.status_name AS name_status FROM sub_main a JOIN status_tb b ON a.main_status = b.status_id ";
+    $sql1 = "SELECT *, b.status_id,c.status_id,c.status_name AS name_status 
+     FROM sub_main a JOIN dimen_status b ON a.main_id = b.main_id JOIN status_tb c ON b.status_id = c.status_id WHERE a.main_id =" .$result['main_id']."ORDER BY id_dimension_status desc";
     $query1 = sqlsrv_query($conn, $sql1);
     $result1 = sqlsrv_fetch_array($query1, SQLSRV_FETCH_ASSOC);
 }
@@ -14,6 +15,17 @@ if (isset($_GET['main_id']) && !empty($_GET['main_id'])) {
 <form action method="post" enctype="multiple/formm-data">
     <div align="right">
         <a href="?page=<?= $_GET['page'] ?>&function=update&main_id=<?= $result['main_id'] ?>" class="btn btn-warning">แก้ไขข้อมูลสถานะ</a>
+
+        <a href="?page=<?= $_GET['page'] ?>&function=print&main_id=<?= $result['main_id'] ?>"
+        onclick="return confirm('คุณต้องการพิมพ์เอกสารนี้ : <?= $result['main_num'] ?> หรือไม่ ??')"
+         class="btn btn-sm btn-success text-white" style="font-size:20px;">พิมพ์รายงาน</a>
+
+        <a href="?page=<?= $_GET['page'] ?>&function=delete&main_id=<?= $result['main_id'] ?>"
+        onclick="return confirm('คุณต้องการลบเอกสารนี้ : <?= $result['main_num'] ?> หรือไม่ ??')"
+        class="btn btn-sm btn-danger"style="font-size:20px;">ลบเอกสาร</a>
+
+        <a class="btn btn-sm text-white" style="background-color:black; font-size:20px;"
+        onclick="window.history.go(-1); return false;">ย้อนกลับ</a>
     </div>
 
     <div class="container">

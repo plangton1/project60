@@ -1,11 +1,11 @@
 <?php
-$department_id = (isset($_GET['department_id'])) ? $_GET['department_id'] : '';
-$department_name = (isset($_GET['department_name'])) ? $_GET['department_name'] : '';
+$dep_id = (isset($_GET['dep_id'])) ? $_GET['dep_id'] : '';
+$dep_name = (isset($_GET['dep_name'])) ? $_GET['dep_name'] : '';
 if (isset($_POST) && !empty($_POST)) {
-    $department_id = $_POST['department_id'];
-    $department_name = $_POST['department_name'];
-    $sql = "INSERT INTO department_tb VALUES (?,?) ";
-    $params = array( $department_id,$department_name);
+    $dep_id = $_POST['dep_id'];
+    $dep_name = $_POST['dep_name'];
+    $sql = "INSERT INTO dep_tb VALUES (?,?) ";
+    $params = array( $dep_id,$dep_name);
     if (sqlsrv_query($conn, $sql, $params)) {
         $alert = '<script type="text/javascript">';
         $alert .= 'alert("เพิ่มหน่วยงานสำเร็จ !!");';
@@ -36,9 +36,9 @@ if (isset($_POST) && !empty($_POST)) {
             <div class="">
                 <div>
                     <label>หมายเลขหน่วยงานที่ขอ</label>
-                    <input  type="text" name="department_id" class="form-control" autocomplete="off">
+                    <input  type="text" name="dep_id" class="form-control" autocomplete="off">
                     <label >ชื่อหน่วยงานที่ขอ</label>
-                    <input type="text" name="department_name" class="form-control" autocomplete="off">
+                    <input type="text" name="dep_name" class="form-control" autocomplete="off">
                 </div>
             </div>
             <hr>
